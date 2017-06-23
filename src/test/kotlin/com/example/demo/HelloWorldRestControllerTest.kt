@@ -1,5 +1,7 @@
 package com.example.demo
 
+import com.example.demo.rest.HelloWorldRestController
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,11 +12,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-import com.fasterxml.jackson.databind.ObjectMapper
-
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloWorldRestController::class)
-class HelloWorldRestControllerTest {
+open class HelloWorldRestControllerTest {
 
     @Autowired
     private val mockMvc: MockMvc? = null
@@ -22,12 +22,11 @@ class HelloWorldRestControllerTest {
     @Autowired
     private val objectMapper : ObjectMapper? = null
 
-
     @Test
     fun testHelloWorldNoArgs() {
         val greeting = Greeting("Hello")
         val greetingAsString = objectMapper?.writeValueAsString(greeting)
-        mockMvc!!.perform(get("/hello"))
+        mockMvc!!.perform(get("/rest/hello"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(greetingAsString))
     }
@@ -37,8 +36,10 @@ class HelloWorldRestControllerTest {
     fun testHelloWorldWithArg() {
         val greeting = Greeting("Hello, Test")
         val greetingAsString = objectMapper?.writeValueAsString(greeting)
-        mockMvc!!.perform(get("/hello/Test"))
+        mockMvc!!.perform(get("/rest/hello/Test"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(greetingAsString))
     }
+
+
 }

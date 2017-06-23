@@ -5,8 +5,8 @@
 </head>
 
 <body>
-
-    <label th:text="${hello}"></label>
+    <!--/*@thymesVar id="greeting" type="com.example.demo.Greeting"*/-->
+    <label th:text="'Hello, ' + ${greeting.getGreetingString()}"></label>
 </body>
 
 </html>
